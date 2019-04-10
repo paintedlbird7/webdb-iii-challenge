@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
       tbl.increments();
   
       tbl.string('name', 128).notNullable();
-  //role = cohort
+  //role = cohorts
   //users = students
       tbl
         .integer('cohort_id')

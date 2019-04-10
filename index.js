@@ -48,6 +48,7 @@ const errors = {
   '19': 'Another record with that value exists',
 };
 
+
 // create cohorts
 server.post('/api/cohorts', async (req, res) => {
   try {
@@ -63,6 +64,7 @@ server.post('/api/cohorts', async (req, res) => {
     res.status(500).json({ message, error });
   }
 });
+
 // update cohorts
 server.put('/api/cohorts/:id', async (req, res) => {
   try {
@@ -101,3 +103,35 @@ const port = process.env.PORT || 3000;
 server.listen(port, () =>
   console.log(`\n** API running on http://localhost:${port} **\n`)
 );
+
+
+
+
+
+// // list all students
+// server.get('/api/students', async (req, res) => {
+//   // get the cohorts from the database
+//   try {
+//     const students = await db('students'); // all the records from the table
+//     res.status(200).json(students);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+// // list a students by id
+// server.get('/api/students/:id', async (req, res) => {
+//   // get the cohorts from the database
+//   try {
+//     const student = await db('students')
+//       .where({ id: req.params.id })
+//       .first();
+//     res.status(200).json(student);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+// const errors = {
+//   '19': 'Another record with that value exists',
+// };
