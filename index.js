@@ -6,7 +6,7 @@ const knex = require('knex');
 const knexConfig = {
   client: 'sqlite3',
   connection: {
-    filename: './data/rolex.db3',
+    filename: './data/lambda.sqlite3',
   },
   useNullAsDefault: true, // needed for sqlite
 };
@@ -17,6 +17,9 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
+  //role = cohort
+  //users = students
+  
 // list all roles
 server.get('/api/roles', async (req, res) => {
   // get the roles from the database
