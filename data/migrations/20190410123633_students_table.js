@@ -5,13 +5,13 @@ exports.up = function(knex, Promise) {
       tbl.increments();
   
       tbl.string('name', 128).notNullable();
-  //role = cohorts
+  //roles = cohorts
   //users = students
       tbl
         .integer('cohort_id')
         .unsigned()
         .references('id')
-        .inTable('cohort')
+        .inTable('cohorts')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
   
