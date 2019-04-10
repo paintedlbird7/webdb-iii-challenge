@@ -4,7 +4,7 @@
   "description": "## Topics",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/paintedlbird7/webdb-iii-challenge/issues"
   },
-  "homepage": "https://github.com/paintedlbird7/webdb-iii-challenge#readme"
+  "homepage": "https://github.com/paintedlbird7/webdb-iii-challenge#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "knex-cleaner": "^1.1.4",
+    "nodemon": "^1.18.11",
+    "sqlite3": "^4.0.6"
+  }
 }
