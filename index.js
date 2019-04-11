@@ -10,6 +10,7 @@ const knexConfig = {
   },
   useNullAsDefault: true, // needed for sqlite
 };
+
 const db = knex(knexConfig);
 
 const server = express();
@@ -107,43 +108,60 @@ server.delete('/api/cohorts/:id', async (req, res) => {
 
 
 
-// list all Students
-server.get('/api/students', async (req, res) => {
-  // get the cohorts from the database
-  try {
-    const students = await db('students'); // all the records from the table
-    res.status(200).json(students);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
 
-// list a students by id
-server.get('/api/students/:id', async (req, res) => {
-  // get the cohorts from the database
-  try {
-    const student = await db('students')
-      .where({ id: req.params.id })
-      .first();
-    res.status(200).json(student);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+server.get('/api/cohorts/:id/students', (req, res) => {
+  const { id } = req.params;
+
+  db('students')
+    .where({cohort_id : id})
+    .then(students => {
+        res.json(students);
+    })
+    .catch(err => {
+        res.status(500).json({
+            errorMessage: `Could not get students for cohort_id:${id}`
+        });
+    });
 });
 
 
+// // list all Students
+// server.get('/api/students', async (req, res) => {
+//   // get the cohorts from the database
+//   try {
+//     const students = await db('students'); // all the records from the table
+//     res.status(200).json(students);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
 
-server.get('/:id/students', async (req, res) => {
-  try{
-      const students = await db('cohorts')
-      .where({ id:req.params.id })
-      .first()
-      res.status(200).json(students);
-  } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'There was an error retrieving student'})
-  }
-});
+// // list a students by id
+// server.get('/api/students/:id', async (req, res) => {
+//   // get the cohorts from the database
+//   try {
+//     const student = await db('students')
+//       .where({ id: req.params.id })
+//       .first();
+//     res.status(200).json(student);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+
+
+// server.get('/:id/students', async (req, res) => {
+//   try{
+//       const students = await db('cohorts')
+//       .where({ id:req.params.id })
+//       .first()
+//       res.status(200).json(students);
+//   } catch (error) {
+//       console.log(error);
+//       res.status(500).json({ error: 'There was an error retrieving student'})
+//   }
+// });
 
 // create Students
 server.post('/api/students', async (req, res) => {
