@@ -133,6 +133,18 @@ server.get('/api/students/:id', async (req, res) => {
 
 
 
+server.get('/:id/students', async (req, res) => {
+  try{
+      const students = await db('cohorts')
+      .where({ id:req.params.id })
+      .first()
+      res.status(200).json(students);
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'There was an error retrieving student'})
+  }
+});
+
 // create Students
 server.post('/api/students', async (req, res) => {
   try {
@@ -149,22 +161,24 @@ server.post('/api/students', async (req, res) => {
   }
 });
 
-// server.get('/:id/students', async (req, res) => {
-//   try {
-//     const cohorts = await Cohorts.find(req.query);
-//     res.status(200).json(cohorts);
-//   } catch (error) {
-//     // log error to database
-//     console.log(error);
-//     res.status(500).json({
-//       message: 'Error retrieving the projects',
-//     });
-//   }
-// });
+// update students
+server.put('/api/students/:id', async (req, res) => {
+  try {
+    const count = await db('students')
+      .where({ id: req.params.id })
+      .update(req.body);
 
-// const errors = {
-//   '19': 'Another record with that value exists',
-// };
+    if (count > 0) {
+      const student = await db('students')
+        .where({ id: req.params.id })
+        .first();
+
+      res.status(200).json(student);
+    } else {
+      res.status(404).json({ message: 'Records not found' });
+    }
+  } catch (error) {}
+});
 
 
 const port = process.env.PORT || 3000;
